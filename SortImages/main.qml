@@ -34,6 +34,7 @@ Window {
 		anchors.right: parent.right
 		anchors.top: moveToTrashBtn.bottom
 		anchors.bottom: parent.bottom
+		fillMode: Image.PreserveAspectFit
 
 		focus: true
 		Keys.onLeftPressed: imageClassifikator.moveToTrash()
