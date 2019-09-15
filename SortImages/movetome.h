@@ -2,11 +2,12 @@
 #define MOVETOME_H
 
 #include <QDir>
+#include "moveaction.h"
 
 class MoveToMe {
 public:
 	MoveToMe(QDir baseDir);
-	void from(const QString &filePath);
+	MoveAction from(const QString &filePath);
 private:
 	QDir _baseDir;
 	uint _currentSubDir;

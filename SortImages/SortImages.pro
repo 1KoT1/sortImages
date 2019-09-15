@@ -36,4 +36,5 @@ DISTFILES += \
 
 HEADERS += \
     imageclassifikator.h \
+    moveaction.h \
     movetome.h
