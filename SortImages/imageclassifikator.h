@@ -10,7 +10,7 @@ class ImageClassifikator : public QObject {
 	Q_OBJECT
 	Q_PROPERTY(QString showedImage READ showedImage NOTIFY showedImageChanged)
 public:
-	explicit ImageClassifikator(const QString &sourceDir, const QString &validDir, QObject *parent = nullptr);
+	explicit ImageClassifikator(const QString &sourceDir, const QString &validDir, const QString &trashDir, QObject *parent = nullptr);
 
 	const QString showedImage() const;
 
@@ -23,6 +23,7 @@ private:
 	std::shared_ptr<QDirIterator> _sourceDir;
 	QString _showedImage;
 	MoveToMe _moveToValid;
+	MoveToMe _moveToTrash;
 	void setShowedImage(const QString &newValue);
 	void loadNextImage();
 };
