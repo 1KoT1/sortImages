@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QSettings>
 
 int main(int argc, char *argv[])
 {
@@ -9,6 +10,11 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qDebug()<<QCoreApplication::applicationFilePath();
+    QSettings config(QCoreApplication::applicationFilePath() + ".ini", QSettings::IniFormat);
+    config.setIniCodec("UTF-8");
+    qDebug()<<config.value("SourceDir");
+    qDebug()<<config.value("TrashDir");
+    qDebug()<<config.value("ValidDir");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
