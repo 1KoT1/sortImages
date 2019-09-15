@@ -6,13 +6,15 @@ MoveToMe::MoveToMe(QDir baseDir) :
 
 }
 
-void MoveToMe::from(const QString &filePath) {
+MoveAction MoveToMe::from(const QString &filePath) {
 	auto targetDir = getTargetDir(_baseDir);
 	if(targetDir.count() > 1000) {
 		++_currentSubDir;
 		targetDir=getTargetDir(_baseDir);
 	}
-	QFile::rename(filePath, targetDir.absoluteFilePath(QFileInfo(filePath).fileName()));
+	auto action = MoveAction(filePath, targetDir.absoluteFilePath(QFileInfo(filePath).fileName()));
+	QFile::rename(action.sourcePath(), action.targetPath());
+	return action;
 }
 
 QDir MoveToMe::getTargetDir(QDir dir) {
