@@ -6,10 +6,11 @@ inline shared_ptr<QDirIterator> makeSourceDirIterator(const QString &sourceDir) 
 	return make_shared<QDirIterator>(sourceDir, QStringList() << "*.jpg", QDir::NoFilter, QDirIterator::Subdirectories);
 }
 
-ImageClassifikator::ImageClassifikator(const QString &sourceDir, QObject *parent) :
+ImageClassifikator::ImageClassifikator(const QString &sourceDir, const QString &validDir, QObject *parent) :
   QObject(parent),
   _sourceDir(makeSourceDirIterator(sourceDir)),
-  _showedImage(_sourceDir->next())
+  _showedImage(_sourceDir->next()),
+  _moveToValid(validDir)
 {
 
 }
@@ -23,6 +24,7 @@ void ImageClassifikator::moveToTrash() {
 }
 
 void ImageClassifikator::moveToValid() {
+	_moveToValid.from(showedImage());
 	loadNextImage();
 }
 

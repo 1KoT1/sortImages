@@ -14,10 +14,12 @@ int main(int argc, char *argv[])
 	QSettings config(QCoreApplication::applicationFilePath() + ".ini", QSettings::IniFormat);
 	config.setIniCodec("UTF-8");
 	qDebug()<<config.value("TrashDir");
-	qDebug()<<config.value("ValidDir");
 
 	QQmlApplicationEngine engine;
-	ImageClassifikator imageClassifikator(config.value("SourceDir").toString(), &app);
+	ImageClassifikator imageClassifikator(
+	      config.value("SourceDir").toString(),
+	      config.value("ValidDir").toString(),
+	      &app);
 	engine.rootContext()->setContextProperty("imageClassifikator", &imageClassifikator);
 	const QUrl url(QStringLiteral("qrc:/main.qml"));
 	QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

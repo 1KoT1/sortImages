@@ -4,12 +4,13 @@
 #include<memory>
 #include <QDirIterator>
 #include <QObject>
+#include "movetome.h"
 
 class ImageClassifikator : public QObject {
 	Q_OBJECT
 	Q_PROPERTY(QString showedImage READ showedImage NOTIFY showedImageChanged)
 public:
-	explicit ImageClassifikator(const QString &sourceDir, QObject *parent = nullptr);
+	explicit ImageClassifikator(const QString &sourceDir, const QString &validDir, QObject *parent = nullptr);
 
 	const QString showedImage() const;
 
@@ -21,6 +22,7 @@ public slots:
 private:
 	std::shared_ptr<QDirIterator> _sourceDir;
 	QString _showedImage;
+	MoveToMe _moveToValid;
 	void setShowedImage(const QString &newValue);
 	void loadNextImage();
 };
