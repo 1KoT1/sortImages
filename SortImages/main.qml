@@ -29,7 +29,7 @@ Window {
 
 	Image {
 		id: currentImage
-		source: imageClassifikator.showedImage
+		source: "file:" + imageClassifikator.showedImage
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.top: moveToTrashBtn.bottom

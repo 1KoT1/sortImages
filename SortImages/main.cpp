@@ -11,15 +11,13 @@ int main(int argc, char *argv[])
 
 	QGuiApplication app(argc, argv);
 
-	qDebug()<<QCoreApplication::applicationFilePath();
 	QSettings config(QCoreApplication::applicationFilePath() + ".ini", QSettings::IniFormat);
 	config.setIniCodec("UTF-8");
-	qDebug()<<config.value("SourceDir");
 	qDebug()<<config.value("TrashDir");
 	qDebug()<<config.value("ValidDir");
 
 	QQmlApplicationEngine engine;
-	ImageClassifikator imageClassifikator(&app);
+	ImageClassifikator imageClassifikator(config.value("SourceDir").toString(), &app);
 	engine.rootContext()->setContextProperty("imageClassifikator", &imageClassifikator);
 	const QUrl url(QStringLiteral("qrc:/main.qml"));
 	QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
