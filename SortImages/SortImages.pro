@@ -15,7 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         imageclassifikator.cpp \
-        main.cpp
+        main.cpp \
+        movetome.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +35,5 @@ DISTFILES += \
     SortImages.ini
 
 HEADERS += \
-    imageclassifikator.h
+    imageclassifikator.h \
+    movetome.h
