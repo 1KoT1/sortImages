@@ -1,9 +1,15 @@
 #include "imageclassifikator.h"
 
+using namespace std;
+
+inline shared_ptr<QDirIterator> makeSourceDirIterator(const QString &sourceDir) {
+	return make_shared<QDirIterator>(sourceDir, QStringList() << "*.jpg", QDir::NoFilter, QDirIterator::Subdirectories);
+}
+
 ImageClassifikator::ImageClassifikator(const QString &sourceDir, QObject *parent) :
   QObject(parent),
-  _sourceDir(sourceDir, QStringList() << "*.jpg", QDir::NoFilter, QDirIterator::Subdirectories),
-  _showedImage(_sourceDir.next())
+  _sourceDir(makeSourceDirIterator(sourceDir)),
+  _showedImage(_sourceDir->next())
 {
 
 }
@@ -13,11 +19,11 @@ const QString ImageClassifikator::showedImage() const {
 }
 
 void ImageClassifikator::moveToTrash() {
-	setShowedImage(_sourceDir.next());
+	loadNextImage();
 }
 
 void ImageClassifikator::moveToValid() {
-	setShowedImage(_sourceDir.next());
+	loadNextImage();
 }
 
 void ImageClassifikator::setShowedImage(const QString &newValue) {
@@ -25,4 +31,11 @@ void ImageClassifikator::setShowedImage(const QString &newValue) {
 		_showedImage = newValue;
 		emit showedImageChanged();
 	}
+}
+
+void ImageClassifikator::loadNextImage() {
+	if(!_sourceDir->hasNext()) {
+		_sourceDir = makeSourceDirIterator(_sourceDir->path());
+	}
+	setShowedImage(_sourceDir->next());
 }

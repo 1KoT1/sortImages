@@ -1,6 +1,7 @@
 #ifndef IMAGECLASSIFIKATOR_H
 #define IMAGECLASSIFIKATOR_H
 
+#include<memory>
 #include <QDirIterator>
 #include <QObject>
 
@@ -18,9 +19,10 @@ signals:
 	void showedImageChanged();
 public slots:
 private:
-	QDirIterator _sourceDir;
+	std::shared_ptr<QDirIterator> _sourceDir;
 	QString _showedImage;
 	void setShowedImage(const QString &newValue);
+	void loadNextImage();
 };
 
 #endif // IMAGECLASSIFIKATOR_H
