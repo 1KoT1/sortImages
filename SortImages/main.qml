@@ -34,5 +34,9 @@ Window {
 		anchors.right: parent.right
 		anchors.top: moveToTrashBtn.bottom
 		anchors.bottom: parent.bottom
+
+		focus: true
+		Keys.onLeftPressed: imageClassifikator.moveToTrash()
+		Keys.onRightPressed: imageClassifikator.moveToValid()
 	}
 }
