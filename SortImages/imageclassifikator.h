@@ -2,6 +2,7 @@
 #define IMAGECLASSIFIKATOR_H
 
 #include<memory>
+#include<optional>
 #include <QDirIterator>
 #include <QObject>
 #include "movetome.h"
@@ -16,6 +17,7 @@ public:
 
 	Q_INVOKABLE void moveToTrash();
 	Q_INVOKABLE void moveToValid();
+	Q_INVOKABLE void revokeLastAction();
 signals:
 	void showedImageChanged();
 public slots:
@@ -24,6 +26,7 @@ private:
 	QString _showedImage;
 	MoveToMe _moveToValid;
 	MoveToMe _moveToTrash;
+	std::optional<MoveAction> _lastAction;
 	void setShowedImage(const QString &newValue);
 	void loadNextImage();
 };

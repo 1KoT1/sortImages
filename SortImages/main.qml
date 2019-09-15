@@ -27,12 +27,21 @@ Window {
 		onClicked: imageClassifikator.moveToValid()
 	}
 
+	Button {
+		id: revokeLastActionBtn
+		text: qsTr("Отменить")
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.top: moveToTrashBtn.bottom
+		onClicked: imageClassifikator.revokeLastAction()
+	}
+
 	Image {
 		id: currentImage
 		source: "file:" + imageClassifikator.showedImage
 		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.top: moveToTrashBtn.bottom
+		anchors.top: revokeLastActionBtn.bottom
 		anchors.bottom: parent.bottom
 		fillMode: Image.PreserveAspectFit
 

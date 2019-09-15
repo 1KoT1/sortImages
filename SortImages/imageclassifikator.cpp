@@ -11,7 +11,8 @@ ImageClassifikator::ImageClassifikator(const QString &sourceDir, const QString &
   _sourceDir(makeSourceDirIterator(sourceDir)),
   _showedImage(_sourceDir->next()),
   _moveToValid(validDir),
-  _moveToTrash(trashDir)
+  _moveToTrash(trashDir),
+  _lastAction(nullopt)
 {
 
 }
@@ -21,12 +22,12 @@ const QString ImageClassifikator::showedImage() const {
 }
 
 void ImageClassifikator::moveToTrash() {
-	_moveToTrash.from(showedImage());
+	_lastAction = _moveToTrash.from(showedImage());
 	loadNextImage();
 }
 
 void ImageClassifikator::moveToValid() {
-	_moveToValid.from(showedImage());
+	_lastAction = _moveToValid.from(showedImage());
 	loadNextImage();
 }
 
@@ -42,4 +43,13 @@ void ImageClassifikator::loadNextImage() {
 		_sourceDir = makeSourceDirIterator(_sourceDir->path());
 	}
 	setShowedImage(_sourceDir->next());
+}
+
+void ImageClassifikator::revokeLastAction() {
+	if(_lastAction) {
+		auto action = _lastAction.value();
+		QFile::rename(action.targetPath(), action.sourcePath());
+		_lastAction.reset();
+		setShowedImage(action.sourcePath());
+	}
 }
